@@ -37,6 +37,35 @@ abstract class AbstractProcessChild extends AbstractProcess implements Interface
     public $parentPid;
 
     /**
+     * Set identifier of parent process.
+     * @param int $pid
+     */
+    public function setParentPid($pid) {
+        // Check pid type
+        self::checkPid($pid);
+        // Check that PID was set
+        if (!$this->getParentPid()) {
+            return $this->parentPid = $pid;
+        } else
+        {
+            return FALSE;
+        }
+    }
+
+    /**
+     * Return parent pid
+     * @return int
+     */
+    public function getParentPid() {
+        if (!empty($this->parentPid)) {
+            return $this->parentPid;
+        } else
+        {
+            return FALSE;
+        }
+    }
+
+    /**
      * Set pid's on class constructor.
      * 
      * @param int $pid
@@ -45,15 +74,7 @@ abstract class AbstractProcessChild extends AbstractProcess implements Interface
      *  pid of parent process
      */
     public function __construct($pid, $parent_pid) {
-        $this->pid = $pid;
-        $this->parentPid = $parent_pid;
-    }
-
-    /**
-     * Return parent pid
-     * @return int
-     */
-    public function getParentPid() {
-        return $this->parentPid;
+        $this->setPid($pid);
+        $this->setParentPid($parent_pid);
     }
 }

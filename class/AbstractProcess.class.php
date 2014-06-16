@@ -45,12 +45,28 @@ abstract class AbstractProcess implements InterfaceProcess {
      */
     public $pid;
 
+    static function checkPid($pid) {
+        if (!is_int($pid)) {
+            throw InvalidArgumentException();
+        } else {
+            return TRUE;
+        }
+    }
+
     /**
      * Set identifier of current process.
      * @param int $pid
      */
     public function setPid($pid) {
-        $this->pid = $pid;
+        // Check pid type
+        self::checkPid($pid);
+        // Check that PID was set
+        if (!$this->getPid()) {
+            return $this->pid = $pid;
+        } else
+        {
+            return FALSE;
+        }
     }
 
     /**
@@ -58,7 +74,12 @@ abstract class AbstractProcess implements InterfaceProcess {
      * @return int
      */
     public function getPid() {
-        return $this->pid;
+        if (!empty($this->pid)) {
+            return $this->pid;
+        } else
+        {
+            return FALSE;
+        }
     }
 
     /**
