@@ -47,7 +47,7 @@ abstract class AbstractProcess implements InterfaceProcess {
 
     static function checkPid($pid) {
         if (!is_int($pid)) {
-            throw InvalidArgumentException();
+            throw new InvalidArgumentException('Wrong PID type');
         } else {
             return TRUE;
         }
